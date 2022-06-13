@@ -119,7 +119,6 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(397, 127);
-            this.ControlBox = false;
             this.Controls.Add(this.вариантcomboBox1);
             this.Controls.Add(this.okbutton);
             this.MaximizeBox = false;
@@ -128,7 +127,7 @@
             this.MinimumSize = new System.Drawing.Size(413, 166);
             this.Name = "chooseVar";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Выбор ваарианта";
+            this.Text = "Выбор варианта";
             this.ResumeLayout(false);
 
         }
