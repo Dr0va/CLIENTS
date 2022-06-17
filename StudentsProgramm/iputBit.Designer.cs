@@ -38,7 +38,7 @@
             this.label2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label2.Location = new System.Drawing.Point(12, 38);
+            this.label2.Location = new System.Drawing.Point(12, 37);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(129, 13);
             this.label2.TabIndex = 8;
@@ -58,7 +58,7 @@
             // 
             this.inputBit.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.inputBit.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.inputBit.Location = new System.Drawing.Point(264, 35);
+            this.inputBit.Location = new System.Drawing.Point(265, 28);
             this.inputBit.MaximumSize = new System.Drawing.Size(120, 22);
             this.inputBit.MinimumSize = new System.Drawing.Size(120, 22);
             this.inputBit.Name = "inputBit";
