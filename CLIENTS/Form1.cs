@@ -74,6 +74,12 @@ namespace CLIENTS
                     m_arrRects[(int)m_eMType].Remove(m_SelectedRect);
                 m_SelectedRect = null;
             }
+            public void deleteRect() // функция удаления выделенной вершины
+            {
+                if (m_arrRects != null)
+                    m_arrRects[(int)m_eMType].Clear();
+                m_SelectedRect = null;
+            }
             public MyRectContainer() //конструктор
             {
                 m_eMType = machineType.Moora;
@@ -406,7 +412,7 @@ namespace CLIENTS
 
         }
 
-            private void pictureBox1_MouseMove(object sender, MouseEventArgs e) // функция вызывается при движении курсора по картинке
+        private void pictureBox1_MouseMove(object sender, MouseEventArgs e) // функция вызывается при движении курсора по картинке
         {
             mX = e.X;
             mY = e.Y;
@@ -418,14 +424,14 @@ namespace CLIENTS
                         myContainer.resizeContainer(new Point(e.X, e.Y));
                         break;
                     case state.scale:
-                        selectedRect.resize(e.X,e.Y);
+                        selectedRect.resize(e.X, e.Y);
                         break;
                     case state.translate:
                         this.Cursor = Cursors.Hand;
                         selectedRect.translate(e.X + offX, e.Y + offY);
                         break;
                 }
-                
+
                 ++FPS;
                 if (FPS == 5)
                 {
@@ -439,17 +445,17 @@ namespace CLIENTS
             {
                 myContainer.changeState(e.X, e.Y);
                 MyRect r = myContainer.getRectByMouse(e.X, e.Y);
-                if (r!=null)
+                if (r != null)
                     this.Cursor = Cursors.Default;
-                    if (myContainer.needToRedraw())
-                    {
-                        myGrpyphics.Draw(myContainer);
-                        pictureBox1.Image = myGrpyphics.getImage();
-                        pictureBox1.Invalidate();
-                        FPS = 0;
-                    }
-                     else
-                        GC.Collect();
+                if (myContainer.needToRedraw())
+                {
+                    myGrpyphics.Draw(myContainer);
+                    pictureBox1.Image = myGrpyphics.getImage();
+                    pictureBox1.Invalidate();
+                    FPS = 0;
+                }
+                else
+                    GC.Collect();
                 pictureBox1.ContextMenuStrip.Items[0].Visible = myContainer.mouseArea();
                 pictureBox1.ContextMenuStrip.Items[1].Visible = myContainer.mouseArea();
                 pictureBox1.ContextMenuStrip.Items[2].Visible = myContainer.mouseArea();
@@ -528,6 +534,11 @@ namespace CLIENTS
 
         private void toolStripComboBox1_Click(object sender, EventArgs e)
         {
+        }
+        private void очиститьbutton1_Click(object sender, EventArgs e)
+        {
+            myContainer.deleteRect();
+            redrawALL();
         }
         public void redrawALL()
         {
