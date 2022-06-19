@@ -28,13 +28,14 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.фАЙЛToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.открытьКартинкуToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.сохрнитьЭталонToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripComboBox1 = new System.Windows.Forms.ToolStripComboBox();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip();
+            this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem3 = new System.Windows.Forms.ToolStripMenuItem();
@@ -150,6 +151,7 @@
             this.очиститьbutton1.TabIndex = 2;
             this.очиститьbutton1.Text = "Очистить";
             this.очиститьbutton1.UseVisualStyleBackColor = true;
+            this.очиститьbutton1.Click += new System.EventHandler(this.очиститьbutton1_Click);
             // 
             // Form1
             // 
