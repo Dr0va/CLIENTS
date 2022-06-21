@@ -30,6 +30,10 @@ namespace StudentsProgramm
         {
             bitText = newBit;
         }
+        public void clearText()
+        {
+            разрядностьcomboBox1.Text = "Разрядность";
+        }
         public string getBit()
         {
             return bitText;

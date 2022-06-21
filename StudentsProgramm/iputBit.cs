@@ -21,6 +21,15 @@ namespace StudentsProgramm
         {
             return inputBit.Text;
         }
+        public void eriseString()
+        {
+            inputBit.Text = "";
+            label1.Text = "";
+        }
+        public void setStateText(string state)
+        {
+            label1.Text = state;
+        }
         public int setMaxLenght(int maxLength)
         {
             return inputBit.MaxLength = maxLength;
