@@ -41,6 +41,7 @@ namespace CLIENTS
         public string FullImage = "";
         OpenFileDialog OFD = new OpenFileDialog();
         SaveFileDialog SFD = new SaveFileDialog();
+        inputBitCount bitCount = new inputBitCount();
         Image image;
         Bitmap bmp;
         bool mousePressed;
@@ -185,7 +186,7 @@ namespace CLIENTS
             public int getY() { return m_topY; }
             public void setX(int _X) { m_leftX=_X;  }
             public void setY(int _Y) { m_topY=_Y;   }
-            bool[] m_arrStates = new bool[8];
+            List<bool> m_arrStates = new List<bool>();
             public bool mouseCanScale(int _X, int _Y, int _Eps) // проверяет, находится ли курсор не более чем на 5 пикселей дальше от левого нижнего угла
             {
                 if ((Math.Abs(_X - (m_leftX + m_width)) <= _Eps) && (Math.Abs(_Y - (m_topY + m_height)) <= _Eps))
@@ -195,10 +196,10 @@ namespace CLIENTS
             }
             public object Clone() //создает копию объекта
             {
-                MyRect mr= new MyRect(m_leftX,m_topY,0);
+                MyRect mr = new MyRect(m_leftX,m_topY,0);
                 mr.m_width = m_width;
                 mr.m_height = m_height;
-                mr.m_arrStates = (bool[])m_arrStates.Clone();
+                mr.m_arrStates = m_arrStates.GetRange(0, m_arrStates.Count);
                 return mr;
             }
             public void translate(int _X, int _y) // функция изменяет положение вершины
@@ -216,17 +217,16 @@ namespace CLIENTS
                 _SW.WriteLine(m_topY.ToString());
                 _SW.WriteLine(m_width.ToString());
                 _SW.WriteLine(m_height.ToString());
-                for (int i = 0; i < m_arrStates.Length; ++i)
+                for (int i = 0; i < m_arrStates.Count; ++i)
                     if (m_arrStates[i] == true)
                         _SW.WriteLine("1");
                     else
                         _SW.WriteLine("0");
             }
             
-            public void changeStates(bool [] _arrStates) // функция изменяет состояния
+            public void changeStates(List<bool> _arrStates) // функция изменяет состояния
             {
-                for (int i = 0; (i < m_arrStates.Length) && (i < _arrStates.Length); ++i)
-                    m_arrStates[i] = _arrStates[i];
+                    m_arrStates = _arrStates.GetRange(0,_arrStates.Count);
             }
             public bool mouseInRect(int _X, int _Y) // проверяет, находится ли курсор мыши внутри состояния
             {
@@ -252,29 +252,24 @@ namespace CLIENTS
             {
                 _gr.TextRenderingHint = System.Drawing.Text.TextRenderingHint.AntiAlias;
                 string states = "";
-                Font font = new System.Drawing.Font("Arial",12);
-                for (int i = 0; i < m_arrStates.Length; ++i)
-                {
-                    if (m_arrStates[i] == true)
-                    {
-                        if (states != "")
-                            states += " ";
-                        states += "a" + i.ToString();
-                    }
-                }
-                    
+                Font font = new System.Drawing.Font("Arial", 12);
+                if (m_arrStates.Count > 0)
+                    if (m_arrStates[0] == true)
+                        states = "a0";
+                    else
+                        states = "a1 - " + "a" + (m_arrStates.Count - 1).ToString();
                 int t = (int)_gr.MeasureString(states, font).Width;
                 int t2 = (int)_gr.MeasureString(states, font).Height;
                 switch (m_eState)
                 {
                     case rectState.redact:
                         _gr.DrawRectangle(_myDashPen, m_leftX, m_topY, m_width, m_height);
-                        _gr.DrawString(states, font, _myDashPen.Brush, m_leftX + m_width +5, m_topY + m_height / 2 - t2/2);
+                        _gr.DrawString(states, font, _myDashPen.Brush, m_leftX + m_width + 5, m_topY + m_height / 2 - t2 / 2);
 
                         break;
                     case rectState.draw:
                         _gr.DrawRectangle(_myDrawPen, m_leftX, m_topY, m_width, m_height);
-                        _gr.DrawString(states, font, _myDrawPen.Brush, m_leftX + m_width  +5 , m_topY + m_height / 2 - t2 / 2);
+                        _gr.DrawString(states, font, _myDrawPen.Brush, m_leftX + m_width + 5, m_topY + m_height / 2 - t2 / 2);
                         break;
                     case rectState.mouseArea:
                         _gr.DrawString(states, font, _myMousePen.Brush, m_leftX + m_width + 5, m_topY + m_height / 2 - t2 / 2);
@@ -303,7 +298,7 @@ namespace CLIENTS
                 m_width = m_height = 10;
                 m_eState = rectState.redact;
                 m_Number = _number;
-                for (int i=0;i<m_arrStates.Length;++i)
+                for (int i = 0; i  < m_arrStates.Count;++i)
                      m_arrStates[i] = false;
             }
         }
@@ -373,6 +368,7 @@ namespace CLIENTS
         public void ChangeRect(object sender, System.EventArgs e) // функция изменения состояния
         {
             mousePressed = false;
+            ad.chooseButton(bitCount.getBit());
             ad.ShowDialog();
             if (ad.allOk())
                 myContainer.getSelectedRect().changeStates(ad.getStates());
@@ -404,6 +400,8 @@ namespace CLIENTS
                 t = OFD.FileName.Substring(OFD.FileName.LastIndexOf('\\') + 1, OFD.FileName.Length- OFD.FileName.LastIndexOf('\\')-1);
                 imageName = "Vars\\imgs\\" + t;
                 FullImage = OFD.FileName;
+                bitCount.ShowDialog();
+                bitCount.clearText();
             }
         }
 

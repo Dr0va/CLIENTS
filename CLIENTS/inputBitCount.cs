@@ -8,13 +8,13 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace StudentsProgramm
+namespace CLIENTS
 {
-    public partial class bitCount : Form
+    public partial class inputBitCount : Form
     {
         bool b_Ok = false;
         string bitText;
-        public bitCount()
+        public inputBitCount()
         {
             InitializeComponent();
         }
