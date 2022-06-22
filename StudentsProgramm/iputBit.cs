@@ -12,7 +12,6 @@ namespace StudentsProgramm
 {
     public partial class iputBit : Form
     {
-        bitCount bit = new bitCount();
         public iputBit()
         {
             InitializeComponent();

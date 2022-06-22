@@ -15,6 +15,29 @@ namespace StudentsProgramm
         public chooseState()
         {
             InitializeComponent();
+            comboBox1.Items.Clear();
+        }
+        public void SetNewComboBoxText(int countState)
+        {
+            comboBox1.Items.Clear();
+            switch (Math.Pow(2,countState))
+            {
+                case 4:
+                    for (int i = 0; i < 4; i++)
+                        comboBox1.Items.Add("a" + i.ToString());
+                    break;
+                case 8:
+                    for (int i = 0; i < 8; i++)
+                        comboBox1.Items.Add("a" + i.ToString());
+                    break;
+                case 16:
+                    for (int i = 0; i < 16; i++)
+                        comboBox1.Items.Add("a" + i.ToString());
+                    break;
+                default:
+                    MessageBox.Show("Не выбрана разрядность!");
+                    break;
+            }
         }
         private int m_chooseState = 0;
         private void chooseState_Load(object sender, EventArgs e)

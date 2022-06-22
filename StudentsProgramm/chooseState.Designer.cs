@@ -63,11 +63,7 @@
             "a0",
             "a1",
             "a2",
-            "a3",
-            "a4",
-            "a5",
-            "a6",
-            "a7"});
+            "a3"});
             this.comboBox1.Location = new System.Drawing.Point(13, 31);
             this.comboBox1.Name = "comboBox1";
             this.comboBox1.Size = new System.Drawing.Size(216, 21);

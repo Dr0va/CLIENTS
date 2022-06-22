@@ -223,10 +223,9 @@ namespace CLIENTS
                     else
                         _SW.WriteLine("0");
             }
-            
             public void changeStates(List<bool> _arrStates) // функция изменяет состояния
             {
-                    m_arrStates = _arrStates.GetRange(0,_arrStates.Count);
+                m_arrStates = _arrStates.GetRange(0, _arrStates.Count);
             }
             public bool mouseInRect(int _X, int _Y) // проверяет, находится ли курсор мыши внутри состояния
             {

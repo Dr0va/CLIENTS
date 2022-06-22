@@ -26,7 +26,7 @@ namespace StudentsProgramm
         chooseVar variant = new chooseVar();
         bitCount bit = new bitCount();
         iputBit inputbit = new iputBit();
-        bool[] m_arrStates = new bool[8];
+        List<bool> m_arrStates = new List<bool>();
         public string ImageSaved;
         public string imageName;
         public static Pen _myMousePen = new Pen(new SolidBrush(Color.ForestGreen));
@@ -37,7 +37,7 @@ namespace StudentsProgramm
         public Form1()
         {
             InitializeComponent();
-            for (int i = 0; i < m_arrStates.Length; ++i)
+            for (int i = 0; i < m_arrStates.Count; ++i)
                 m_arrStates[i] = false;
             dataGridView1.ReadOnly = true;
             //
@@ -90,6 +90,8 @@ namespace StudentsProgramm
             myContainer.readFromFile(SR);
             dataGridView1.Rows.Clear();
             bit.ShowDialog();
+            for (int i = 0; i < Math.Pow(2, int.Parse(bit.getBit())); i++)
+                m_arrStates.Add(false);
             bit.clearText();
         }
         private void Form1_Load(object sender, EventArgs e)
@@ -105,9 +107,12 @@ namespace StudentsProgramm
         private void pictureBox1_MouseClick(object sender, MouseEventArgs e)
         {
             var value = "a0";
+            m_fCS.SetNewComboBoxText(Int32.Parse(bit.getBit()));
             if (bit.allOk())
             {
                 MyRect mr = myContainer.getRectByMouse(e.X, e.Y);
+                //myContainer.getSelectedRect();
+                //m_arrStates = myContainer.getSelectedRect().getStates();
                 if (mr == null)
                 {
                     //MessageBox.Show("Ошибка!", "Ошибка при заполнении");
@@ -122,6 +127,7 @@ namespace StudentsProgramm
                     {
                         if (mr.isCorrectState(m_fCS.getSelectedState()))
                         {
+                            //m_arrStates = mr. GetRange(0, _arrStates.Count);
                             if (m_arrStates[m_fCS.getSelectedState()] == true && (m_fCS.getSelectedState() != 0))
                             {
                                 MessageBox.Show("Такое состояние уже было заполнено", "Ошибка!", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -226,7 +232,7 @@ namespace StudentsProgramm
             myContainer.changeType((int)(toolStripComboBox1.SelectedIndex));
             dataGridView1.RowCount = 1;
             dataGridView1.ColumnCount = 2;
-            for (int i = 0; i < m_arrStates.Length; ++i)
+            for (int i = 0; i < m_arrStates.Count; ++i)
                 m_arrStates[i] = false;
             if (fl == false) return;
             FileStream FS = File.Open(OFD.FileName, FileMode.Open);
@@ -305,12 +311,13 @@ namespace StudentsProgramm
         public class MyRect
         {
             private int m_Number;
-            private int m_leftX, m_topY, m_width, m_height;
+            public int m_leftX, m_topY, m_width, m_height;
             private int stateRect;
+            string temp = "";
+            string temp2 = "";
             rectState m_eState;
             bool m_bFree, stateRectBool;
-
-            bool[] m_arrStates = new bool[8];
+            List<bool> m_arrStates = new List<bool>();
             public rectState getState()
             {
                 return m_eState;
@@ -318,6 +325,19 @@ namespace StudentsProgramm
             public bool isFree()
             {
                 return m_bFree;
+            }
+            public List<bool> getStates()
+            {
+                return m_arrStates;
+            }
+            public void SetCountList(int count)
+            {
+                for (int i = 0; i < count; i++)
+                    m_arrStates.Add(false);
+            }
+            public void changeStates(List<bool> _arrStates) // функция изменяет состояния
+            {
+                m_arrStates = _arrStates.GetRange(0, _arrStates.Count);
             }
             public int getStateRect()
             {
@@ -349,23 +369,62 @@ namespace StudentsProgramm
                 _SW.WriteLine(m_topY.ToString());
                 _SW.WriteLine(m_width.ToString());
                 _SW.WriteLine(m_height.ToString());
-                for (int i = 0; i < m_arrStates.Length; ++i)
+                for (int i = 0; i < m_arrStates.Count; ++i)
                     if (m_arrStates[i] == true)
                         _SW.WriteLine("1");
                     else
                         _SW.WriteLine("0");
             }
-            public void readFromFile(System.IO.StreamReader _SR)
+            public string readFromFile(System.IO.StreamReader _SR, string precol)
             {
-                m_leftX = int.Parse(_SR.ReadLine());
+
+                try
+                { //string temp;
+                    switch (int.Parse(precol))
+                    {
+                        case 0:
+                            m_leftX = int.Parse(_SR.ReadLine());
+                            break;
+                        case 1:
+                            m_leftX = int.Parse(_SR.ReadLine());
+                            break;
+                        default:
+                            m_leftX = int.Parse(precol);
+                            break;
+                    }
+                }
+                catch { return null; }
+                //if (int.Parse(precol) == 0 || int.Parse(precol) == 1)
+                //    m_leftX = int.Parse(_SR.ReadLine());
+                //else
+                //    m_leftX = int.Parse(precol);
                 m_topY = int.Parse(_SR.ReadLine());
                 m_width = int.Parse(_SR.ReadLine());
                 m_height = int.Parse(_SR.ReadLine());
-                for (int i = 0; i < m_arrStates.Length; ++i)
-                    if ((int.Parse(_SR.ReadLine())) == 1)
-                        m_arrStates[i] = true;
+                temp = _SR.ReadLine();
+                for (; temp == "0" || temp == "1"; temp = _SR.ReadLine())
+                {
+                    if (temp == "1")
+                    {
+                        //_SR.ReadLine();
+                        m_arrStates.Add(true);
+                        //precol = temp;
+                    }
+
                     else
-                        m_arrStates[i] = false;
+                    {
+                        //_SR.ReadLine();
+                        m_arrStates.Add(false);
+                        //precol = temp;
+                    }
+
+                }
+                //for (int i = 0; i < m_arrStates.Count; ++i)
+                //    if ((int.Parse(_SR.ReadLine())) == 1)
+                //        m_arrStates[i] = true;
+                //    else
+                //        m_arrStates[i] = false;
+                return temp;
             }
             public bool isCorrectState(int a)
             {
@@ -383,12 +442,12 @@ namespace StudentsProgramm
             }
             public void changeStates(bool[] _arrStates)
             {
-                for (int i = 0; (i < m_arrStates.Length) && (i < _arrStates.Length); ++i)
+                for (int i = 0; (i < m_arrStates.Count) && (i < _arrStates.Length); ++i)
                     m_arrStates[i] = _arrStates[i];
             }
             public void setState(int _stateNumber)
             {
-                for (int i = 0; (i < m_arrStates.Length); ++i)
+                for (int i = 0; (i < m_arrStates.Count); ++i)
                     m_arrStates[i] = false;
                 m_arrStates[_stateNumber] = true;
                 m_bFree = false;
@@ -420,7 +479,7 @@ namespace StudentsProgramm
                 string states = "";
                 int t, t2;
                 Font font = new System.Drawing.Font("Times New Roman", 12);
-                for (int i = 0; i < m_arrStates.Length; ++i)
+                for (int i = 0; i < m_arrStates.Count; ++i)
                 {
                     if (m_arrStates[i] == true)
                     {
@@ -429,7 +488,11 @@ namespace StudentsProgramm
                         states += "a" + i.ToString();
                     }
                 }
-
+                //if (m_arrStates.Count > 0)
+                //    if (m_arrStates[0] == true)
+                //        states = "a0";
+                //    else
+                //        states = "a1 - " + "a" + (m_arrStates.Count - 1).ToString();
                 t = (int)_gr.MeasureString(states, font).Width;
                 t2 = (int)_gr.MeasureString(states, font).Height;
 
@@ -454,8 +517,21 @@ namespace StudentsProgramm
                 m_width = m_height = 0;
                 m_eState = rectState.redact;
                 m_Number = _number;
-                for (int i = 0; i < m_arrStates.Length; ++i)
-                    m_arrStates[i] = false;
+            }
+        }
+        public class vremyanka
+        {
+            string temp2 = "0";
+            public vremyanka() 
+            { 
+            }
+            public void WriteTemp(string temp_)
+            {
+                temp2 = temp_;
+            }
+            public string ReadTemp()
+            {
+                return temp2;
             }
         }
         public class MyRectContainer
@@ -465,6 +541,7 @@ namespace StudentsProgramm
             private ArrayList[] m_arrRects = new ArrayList[2];
             private bool m_MouseAreaState = false;
             MyRect m_SelectedRect = null;
+            vremyanka textik = new vremyanka();
             public void changeType(int type)
             {
                 m_eMType = (machineType)type;
@@ -566,26 +643,34 @@ namespace StudentsProgramm
             public void readFromFile(StreamReader _SR)
             {
                 int n = int.Parse(_SR.ReadLine());
+                //string circle = textik.ReadTemp();
                 MyRect mr;
+                
                 m_arrRects[0].Clear();
                 m_arrRects[1].Clear();
                 for (int i = 0; i < n; ++i)
                 {
+                    
                     mr = new MyRect(0, 0, i);
-                    mr.readFromFile(_SR);
+                    //mr.SetCountList(n);
+                    textik.WriteTemp(mr.readFromFile(_SR, textik.ReadTemp()));
                     m_arrRects[0].Add(mr);
                 }
                 n = int.Parse(_SR.ReadLine());
                 for (int i = 0; i < n; ++i)
                 {
                     mr = new MyRect(0, 0, i);
-                    mr.readFromFile(_SR);
+                    textik.WriteTemp(mr.readFromFile(_SR, textik.ReadTemp()));
                     m_arrRects[1].Add(mr);
                 }
             }
             public string getCount()
             {
                 return m_arrRects[(int)m_eMType].Count.ToString();
+            }
+            public ArrayList getThisRect()
+            {
+                return m_arrRects[(int)m_eMType];
             }
             public void draw(Graphics _gr)
             {

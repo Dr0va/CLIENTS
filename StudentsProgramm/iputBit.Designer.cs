@@ -40,6 +40,8 @@
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.label2.Location = new System.Drawing.Point(8, 40);
+            this.label2.MaximumSize = new System.Drawing.Size(126, 13);
+            this.label2.MinimumSize = new System.Drawing.Size(126, 13);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(126, 13);
             this.label2.TabIndex = 8;
@@ -59,7 +61,7 @@
             // 
             this.inputBit.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.inputBit.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.inputBit.Location = new System.Drawing.Point(265, 31);
+            this.inputBit.Location = new System.Drawing.Point(265, 35);
             this.inputBit.MaximumSize = new System.Drawing.Size(120, 22);
             this.inputBit.MinimumSize = new System.Drawing.Size(120, 22);
             this.inputBit.Name = "inputBit";
@@ -77,10 +79,10 @@
             // iputBit
             // 
             this.AcceptButton = this.inputBin_button1;
+            this.AllowDrop = true;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(397, 127);
-            this.ControlBox = false;
             this.Controls.Add(this.label1);
             this.Controls.Add(this.inputBit);
             this.Controls.Add(this.inputBin_button1);

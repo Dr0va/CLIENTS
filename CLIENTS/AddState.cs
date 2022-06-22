@@ -22,7 +22,6 @@ namespace CLIENTS
         {
             return m_OK;
         }
-        private bool[] m_arr = new bool[8];
         private List<bool> listStates = new List<bool>();
         public void setOffBtn()
         {
@@ -68,7 +67,6 @@ namespace CLIENTS
         }
         private void a0btn_Click(object sender, EventArgs e)
         {
-
             listStates.Add(true);
             for (int i = 1; i <= bitcountTemp; i++)
                 listStates.Add(false);
